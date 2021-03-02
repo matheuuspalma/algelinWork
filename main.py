@@ -4,7 +4,7 @@
 #Algebra Linear II - Prof.: Marcelo Campos
 #Grupo 2
 
-from funcoes import criarMatriz, printMatriz, transposta, setMatriz
+from funcoes import criarMatriz, printMatriz, transposta, setMatriz, multiplicacaoMatrizes, decomposicaoPLU
 
 def main():
 
@@ -18,12 +18,23 @@ def main():
 
     setMatriz(m)
 
-    printMatriz(m)
-
     t = transposta(m)
 
-    printMatriz(t)
+    resultado = multiplicacaoMatrizes(t, m)
 
+    u = criarMatriz(len(resultado), len(resultado[0]))
+    l = criarMatriz(len(resultado), len(resultado[0]))
+    p = criarMatriz(len(resultado), len(resultado[0]))
+
+    decomposicaoPLU(resultado, p, l, u)
+    print("\n*** Matriz resultado: ***")
+    printMatriz(resultado)
+    print("\n*** Matriz P: ***")
+    printMatriz(p)
+    print("\n*** Matriz L: ***")
+    printMatriz(l)
+    print("\n *** Matriz U: ***")
+    printMatriz(u)
     return 0
 
 main()
