@@ -21,16 +21,29 @@ def printMatriz(m):
     print("")
     return 0
 
-def setMatriz(matriz):        
+def setVetor(nameFile):
+    
+    m = criarMatriz(15,5)
+    v = [0]*15
 
-    fileMatriz = open("dados_02.csv","r")
+    setMatriz(m, nameFile)
+
+    for i in range(15):
+        v[i] = m[i][4]
+    
+
+    return v
+
+def setMatriz(matriz, nameFile):        
+
+    fileMatriz = open(nameFile + ".csv","r")
 
     content = fileMatriz.readlines()
 
     value = ""
     for i in range( 1 ,len(matriz)+1,1):
         k = 0
-        if(len(matriz[0])== 4):
+        if(len(matriz[0])== 3):
                 while(content[i][k] != ","): #para pular o id
                     k += 1
                 k += 1
@@ -85,12 +98,9 @@ def decomposicaoPLU(a,p,l,u):  #sistema linar Ax=b || A matriz a será decompost
                 p[i][j] = 1
                 l[i][j] = 1
 
-    print("*** Matriz U = A: ***")
-    printMatriz(u)
-
     j = 0
     while (j < nColunas - 1):
-        i = j
+        i = j   
         pivoteamento(a,p,j)
         while(i < nLinhas - 1):
             m = u[i + 1][j]/u[j][j]
@@ -98,7 +108,7 @@ def decomposicaoPLU(a,p,l,u):  #sistema linar Ax=b || A matriz a será decompost
                 l[i + 1][j] = m
                 k = j
             while(k < nColunas):   
-                u[i + 1][k] = u[i + 1][k] - m*u[j][k]         
+                u[i + 1][k] = u[i + 1][k] - (m*u[j][k])         
                 k += 1
             i += 1
         j += 1
@@ -123,10 +133,8 @@ def pivoteamento(m,p,nColuna):
 def multiplicacaoMatrizes(a,b):
 
     resultado = criarMatriz(len(a), len(b[0]))   # A mXn e B nXj   matriz resultado é R mXj
-    
     if(len(a) != len(b[0]) ):
         return -1
-    
     linhas = 0
     i = -1
     while(linhas < len(a)):
@@ -135,16 +143,66 @@ def multiplicacaoMatrizes(a,b):
         for colunas in range(len(a[0])):
             soma += a[linhas][colunas]*b[colunas][i]
         resultado[linhas][i] = soma
-        
         if(i == (len(resultado[0]) - 1)):
             i = -1
             linhas += 1
 
     return resultado    
 
-    
 
+def backSubstitutionLower(a, b): # sistema linar Ax=B
 
+    x = [0]*len(b)
 
+    x[0] = b[0]/a[0][0]
+    x[1] = (b[1] - a[1][0]*x[0])/a[1][1]
+    x[2] = (b[2] - a[2][0]*x[0] - a[2][1]*x[1])/a[2][2]
 
-    
+    if(len(b) == 4):
+        x[3] = (b[3] - a[3][0]*x[0] - a[3][1]*x[1] - a[3][2]*x[2])/a[3][3]
+       
+    return x
+
+def backSubstitutionUpper(a, b): # sistema linar Ax=B
+
+    x = [0]*len(b)
+
+    if(len(b) == 4):
+        x[3] = (b[3])/a[3][3]
+        x[2] = (b[2] - a[2][3]*x[3])/a[2][2]
+        x[1] = (b[1] - a[1][3]*x[3] - a[1][2]*x[2])/a[1][1]
+        x[0] = (b[0] - a[0][3]*x[3] - a[0][2]*x[2] - a[0][1]*x[1])/a[0][0]
+    else:
+        x[2] = (b[2])/a[2][2]
+        x[1] = (b[1] - a[1][2]*x[2])/a[1][1]
+        x[0] = (b[0] - a[0][2]*x[2] - a[0][1]*x[1])/a[0][0]
+
+    return x
+
+def multiplicacaoMV(m,v):
+
+    linhas = len(m)
+    colunas = len(m[0])
+
+    resultado =[0]*linhas
+
+    if( colunas != len(v)):
+        return -1
+
+    for i in range(linhas):
+        soma = 0
+        for j in range(colunas):
+            soma += m[i][j]*v[j]
+
+        resultado[i] = soma
+
+    return resultado
+
+def printVetor(v):
+
+    for i in range(len(v)):
+        string = str(round(v[i], 4))
+        print(string, end  = "\t")
+
+    print("\n")
+    return 0
