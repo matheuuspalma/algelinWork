@@ -80,7 +80,7 @@ def main():
     print(" RESULTADO VIRGINICA :")
     printVetor(result3)
 
-    
+    printMatriz(aproximacao1)
     return 0
 
 
