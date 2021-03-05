@@ -5,6 +5,7 @@
 #Grupo 2
 
 from funcoes import criarMatriz, printMatriz, transposta, setMatriz, multiplicacaoMatrizes, decomposicaoPLU, backSubstitutionLower, setVetor, multiplicacaoMV, backSubstitutionUpper, printVetor
+import numpy as np
 
 def main():
 
@@ -42,10 +43,38 @@ def main():
     
     result1 = backSubstitutionUpper(u1,y1)
     
-    print(" RESULTADO SETOSA :")
-    printVetor(result1)
 
+    print("**************************************")
+    print(" RESULTADO SETOSA :")
+
+    print("\nMATRIZ A: ")
+    printMatriz(aproximacao1)
+
+    print("\nMATRIZ P :")
+    printMatriz(p1)
+
+    print("\nMATRIZ L : ")
+    printMatriz(l1)
+
+    print("\nMATRIZ U:")
+    printMatriz(u1)
+
+    print("\nCoeficientes: ")
+    printVetor(result1)
+    print("\n\nDECOMPOSIÇÂO ESPECTRAL: \n\n")
+
+    uh1, s1, vh1 = np.linalg.svd(aproximacao1)
+
+    print("\nMATRIZ U:")
+    printMatriz(uh1)
+    print("\nMATRIZ S:")
+    printVetor(s1)
+    print("\nMATRIZ V:")
+    printMatriz(vh1)
     
+    
+    print("\n**************************************")
+
     #********************** versicolor ********************
     u2 = criarMatriz(len(aproximacao2), len(aproximacao2[0]))
     l2 = criarMatriz(len(aproximacao2), len(aproximacao2[0]))
@@ -59,8 +88,36 @@ def main():
 
     result2 = backSubstitutionUpper(u2,y2)
     
-    print(" RESULTADO VERSICOLOR :")
+    print("**************************************")
+    print(" RESULTADO VERSICOLOR :\n")
+
+    print("MATRIZ A: ")
+    printMatriz(aproximacao2)
+
+    print("\n MATRIZ P :")
+    printMatriz(p2)
+
+    print("\nMATRIZ L : ")
+    printMatriz(l2)
+
+    print("\nMATRIZ U:")
+    printMatriz(u2)
+
+    print("\nCoeficientes: ")
     printVetor(result2)
+
+    print("\n\nDECOMPOSIÇÂO ESPECTRAL: \n\n")
+
+    uh2, s2, vh2 = np.linalg.svd(aproximacao2)
+
+    print("\nMATRIZ U:")
+    printMatriz(uh2)
+    print("\nMATRIZ S:")
+    printVetor(s2)
+    print("\nMATRIZ V:")
+    printMatriz(vh2)
+    
+    print("\n**************************************")
 
     
     #********************** virginica ********************
@@ -76,11 +133,35 @@ def main():
     y3 = backSubstitutionLower(l3,b3)
 
     result3 = backSubstitutionUpper(u3,y3)
-    
+    print("\n**************************************")
     print(" RESULTADO VIRGINICA :")
+
+    print("\nMATRIZ A: ")
+    printMatriz(aproximacao3)
+
+    print("\nMATRIZ P :")
+    printMatriz(p3)
+
+    print("\nMATRIZ L : ")
+    printMatriz(l3)
+
+    print("\nMATRIZ U:")
+    printMatriz(u3)
+
+    print("\nCoeficientes: ")
     printVetor(result3)
 
-    printMatriz(aproximacao1)
+    print("\n\nDECOMPOSIÇÂO ESPECTRAL: \n\n")
+
+    uh3, s3, vh3 = np.linalg.svd(aproximacao3)
+
+    print("\nMATRIZ U:")
+    printMatriz(uh3)
+    print("\nMATRIZ S:")
+    printVetor(s3)
+    print("\nMATRIZ V:")
+    printMatriz(vh3)
+    
     return 0
 
 

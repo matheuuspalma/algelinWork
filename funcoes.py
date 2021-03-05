@@ -11,7 +11,6 @@ def printMatriz(m):
     i = len(m)
     j = len(m[0])
 
-    print()
     for linhas in range (0, i, 1):
         print("")
         for colunas in range(0, j, 1):
